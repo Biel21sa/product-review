@@ -1,0 +1,79 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app {
+  width: 100%;
+  max-width: 960px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+nav {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos globais para botões */
+button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.5rem;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para links que parecem botões */
+a button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Conteúdo principal */
+.container {
+  padding: 20px;
+}
