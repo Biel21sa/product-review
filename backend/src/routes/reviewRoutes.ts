@@ -18,7 +18,6 @@ router.post(
     controller.createReview(req, res)
   )
 );
-
 router.get(
   "/",
   asyncHandler((req: Request, res: Response) =>

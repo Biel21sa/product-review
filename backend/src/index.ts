@@ -2,19 +2,19 @@ import express from "express";
 import mongoose from "mongoose";
 import productRoutes from "./routes/productRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
-import cors from "cors"; // Importe o middleware CORS
+import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors()); // Use o middleware CORS para permitir todas as origens (para desenvolvimento)
+app.use(cors());
 app.use(express.json());
 
 mongoose
   .connect("mongodb://localhost:27017/product-review", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  } as mongoose.ConnectOptions) // Cast para ConnectOptions
+  } as mongoose.ConnectOptions)
   .then(() => console.log("Conectado ao MongoDB"))
   .catch((err) => console.error("Erro ao conectar ao MongoDB:", err));
 

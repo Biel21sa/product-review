@@ -31,12 +31,6 @@ router.get(
   )
 );
 router.get(
-  "/:productId/reviews",
-  asyncHandler((req: Request, res: Response) =>
-    controller.getProductReviews(req, res)
-  )
-);
-router.get(
   "/:productId/average-rating",
   asyncHandler((req: Request, res: Response) =>
     controller.getProductAverageRating(req, res)
