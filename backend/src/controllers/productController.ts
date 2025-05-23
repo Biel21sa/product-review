@@ -21,9 +21,6 @@ class ProductController {
   }
 
   async getProductById(req: Request, res: Response): Promise<Response> {
-    console.log(
-      `[ProductController] getProductById chamado com ID: ${req.params.productId}`
-    );
     try {
       const product = await productService.getProductById(req.params.productId);
       if (!product) {
