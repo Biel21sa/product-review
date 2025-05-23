@@ -6,11 +6,13 @@ Este projeto consiste em um frontend construído com **React** e um backend com 
 
 ## Estrutura do Projeto
 
+```
 product-review/
 ├── backend/ # Código do servidor (Node.js, Express)
 ├── frontend/ # Código da interface do usuário (React)
 ├── docker-compose.yml # Definição dos serviços Docker
 └── README.md
+```
 
 ## Backend (`backend/`)
 
