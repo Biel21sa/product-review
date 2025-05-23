@@ -6,11 +6,13 @@ Este projeto consiste em um frontend construído com **React** e um backend com 
 
 ## Estrutura do Projeto
 
+```
 product-review/
 ├── backend/ # Código do servidor (Node.js, Express)
 ├── frontend/ # Código da interface do usuário (React)
 ├── docker-compose.yml # Definição dos serviços Docker
 └── README.md
+```
 
 ## Backend (`backend/`)
 
@@ -67,7 +69,7 @@ product-review/
 
 1.  Navegue até o diretório `backend`: `cd backend`
 2.  Instale as dependências: `npm install`
-3.  Execute o servidor de desenvolvimento: `npm run dev`
+3.  Execute o servidor de desenvolvimento: `npm start`
 
 O backend estará rodando em `http://localhost:3000`.
 
