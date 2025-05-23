@@ -1,8 +1,26 @@
-# API REST de Produtos e Avaliações
+# Aplicação de E-commerce com Avaliações de Produtos
 
-## Informações do Projeto
+## Visão Geral
 
-Este é um backend construído com **Node.js**, utilizando o framework **Express.js** e o banco de dados **MongoDB**. A API REST implementada permite gerenciar produtos e suas respectivas avaliações.
+Este projeto consiste em um frontend construído com **React** e um backend com **Node.js**, **Express.js** e **MongoDB**. A aplicação permite aos usuários visualizar produtos, adicionar avaliações e aos administradores cadastrar novos produtos.
+
+## Estrutura do Projeto
+
+product-review/
+├── backend/ # Código do servidor (Node.js, Express)
+├── frontend/ # Código da interface do usuário (React)
+├── docker-compose.yml # Definição dos serviços Docker
+└── README.md
+
+## Backend (`backend/`)
+
+### Tecnologias
+
+- **Node.js**
+- **Express.js** (Framework web)
+- **MongoDB** (Banco de dados NoSQL)
+- **Mongoose** (ODM para MongoDB)
+- **TypeScript**
 
 ### Entidades
 
@@ -14,86 +32,94 @@ Este é um backend construído com **Node.js**, utilizando o framework **Express
 | `description` | `string` | Descrição do produto       |
 | `price`       | `number` | Preço do produto           |
 | `category`    | `string` | Categoria do produto       |
-| `createdAt`   | `date`   | Data de criação do produto |
+| `createdAt`   | `Date`   | Data de criação do produto |
 
 #### 📝 `reviews`
 
-| Campo       | Tipo                         | Descrição                        |
-| ----------- | ---------------------------- | -------------------------------- |
-| `productId` | `ObjectId` (ref: `products`) | Referência ao produto avaliado   |
-| `author`    | `string`                     | Autor da avaliação               |
-| `rating`    | `number` (1 a 5)             | Classificação da avaliação (1-5) |
-| `comment`   | `string`                     | Comentário da avaliação          |
-| `createdAt` | `date`                       | Data de criação da avaliação     |
+| Campo       | Tipo                                 | Descrição                        |
+| ----------- | ------------------------------------ | -------------------------------- |
+| `productId` | `ObjectId` (referência a `products`) | ID do produto avaliado           |
+| `author`    | `string`                             | Nome do autor da avaliação       |
+| `rating`    | `number` (1 a 5)                     | Classificação da avaliação (1-5) |
+| `comment`   | `string`                             | Comentário da avaliação          |
+| `createdAt` | `Date`                               | Data de criação da avaliação     |
 
-**Regras:** Cada produto pode ter várias avaliações.
-
-## Funcionalidades da API
-
-A API REST implementada permite as seguintes operações:
+### Funcionalidades da API
 
 - **Produtos:**
   - `POST /products`: Criar um novo produto.
   - `GET /products`: Listar todos os produtos.
-- **Avaliações por Produto:**
-  - `POST /products/:productId/reviews`: Criar uma nova avaliação para um produto específico.
-  - `GET /products/:productId/reviews`: Listar todas as avaliações de um produto específico.
-- **Média de Avaliações:**
-  - `GET /products/:productId/average-rating`: Obter a média das avaliações de um produto específico.
+  - `GET /products/:productId`: Obter detalhes de um produto.
+- **Avaliações:**
+  - `POST /products/:productId/reviews`: Adicionar uma avaliação a um produto.
+  - `GET /products/:productId/reviews`: Listar as avaliações de um produto.
+  - `GET /products/:productId/average-rating`: Obter a média de avaliações de um produto.
 
-## Como executar
+### Como executar o Backend
 
-### Pré-requisitos
+#### Pré-requisitos
 
-- [Node.js](https://nodejs.org/) instalado
-- [npm](https://www.npmjs.com/) (geralmente instalado com o Node.js)
-- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (opcional, para a execução com Docker)
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- MongoDB rodando localmente na porta padrão (`27017`) ou configurado via URI.
 
-### Execução Local
+#### Passos
 
-1.  Clone este repositório (se aplicável).
-2.  Navegue até a pasta do projeto no seu terminal.
-3.  Instale as dependências:
+1.  Navegue até o diretório `backend`: `cd backend`
+2.  Instale as dependências: `npm install`
+3.  Execute o servidor de desenvolvimento: `npm run dev`
+
+O backend estará rodando em `http://localhost:3000`.
+
+## Frontend (`frontend/`)
+
+### Tecnologias
+
+- **React** (Biblioteca JavaScript para interfaces de usuário)
+- **Axios** (Cliente HTTP para fazer requisições ao backend)
+- **React Router** (Para navegação)
+- **CSS Modules** (Para estilos locais)
+
+### Funcionalidades
+
+- Listagem de produtos, separados por categoria.
+- Visualização de detalhes de um produto, incluindo avaliações.
+- Adição de novas avaliações a um produto.
+- Cadastro de novos produtos (para administradores).
+
+### Como executar o Frontend
+
+#### Pré-requisitos
+
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+
+#### Passos
+
+1.  Navegue até o diretório `frontend`: `cd frontend`
+2.  Instale as dependências: `npm install`
+3.  Execute o servidor de desenvolvimento: `npm run dev`
+
+O frontend estará acessível em `http://localhost:5173`.
+
+## Execução com Docker Compose
+
+Para executar toda a aplicação (backend, frontend e MongoDB) usando Docker:
+
+1.  Certifique-se de ter o [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) instalados.
+2.  Navegue até a raiz do projeto (onde o arquivo `docker-compose.yml` está localizado).
+3.  Execute o seguinte comando:
+
     ```bash
-    npm install
+    docker-compose up --build
     ```
-4.  Certifique-se de que o MongoDB esteja rodando localmente (na porta padrão `27017`).
-5.  Inicie o servidor backend:
-    ```bash
-    npm run dev # Ou node server.js, dependendo da sua configuração
-    ```
-    O servidor estará rodando em `http://localhost:3000`.
 
-### Execução com Docker
+A aplicação estará disponível em:
 
-1.  Certifique-se de ter o Docker e o Docker Compose instalados.
-2.  Navegue até a pasta do projeto no seu terminal.
-3.  Inicie os containers com Docker Compose:
-    ```bash
-    docker-compose up -d
-    ```
-    O backend estará acessível em `http://localhost:3000`. O MongoDB estará rodando dentro do container.
-
-## Endpoints da API
-
-Aqui estão os endpoints da API que você pode consumir:
-
-- `POST http://localhost:3000/products` - Cria um novo produto (requer um corpo JSON com as informações do produto).
-- `GET http://localhost:3000/products` - Retorna uma lista de todos os produtos.
-- `POST http://localhost:3000/products/:productId/reviews` - Cria uma nova avaliação para o produto com o ID especificado (requer um corpo JSON com as informações da avaliação).
-- `GET http://localhost:3000/products/:productId/reviews` - Retorna uma lista de avaliações para o produto com o ID especificado.
-- `GET http://localhost:3000/products/:productId/average-rating` - Retorna a média das avaliações para o produto com o ID especificado.
-
-## Tecnologias Utilizadas
-
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- TypeScript (opcional, dependendo da implementação)
-- Docker (opcional, para containerização)
-- Docker Compose (opcional, para orquestração de containers)
+- Backend: `http://localhost:3000`
+- Frontend: `http://localhost:5173`
+- MongoDB: Rodando internamente nos containers.
 
 ---
 
-Este é um backend simples para um teste técnico, demonstrando a criação de uma API REST com Node.js, Express.js e MongoDB para gerenciar produtos e avaliações.
+Este README fornece uma visão geral da aplicação, suas funcionalidades e como executá-la. Sinta-se à vontade para explorar o código e contribuir!

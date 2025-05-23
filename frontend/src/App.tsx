@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ProductList from "../components/ProductList/ProductList";
-import ProductDetails from "../components/ProductDetails";
-import AddProduct from "../components/AddProduct";
-import AddReview from "../components/AddReview";
+import ProductDetails from "../components/ProductDetails/ProductDetails";
+import AddProduct from "../components/AddProduct/AddProduct";
+import AddReview from "../components/AddReview/AddReview";
 import "./App.css";
 
 const App: React.FC = () => {

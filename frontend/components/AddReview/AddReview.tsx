@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import axios from "axios";
+import "./AddReview.css";
 
 interface ReviewFormData {
   author: string;
@@ -20,6 +22,9 @@ const AddReview: React.FC<AddReviewProps> = ({ productId: propProductId }) => {
     comment: "",
   });
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const { state } = useLocation();
+  const productName = (state?.productName as string) || "Produto Desconhecido";
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,25 +33,37 @@ const AddReview: React.FC<AddReviewProps> = ({ productId: propProductId }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     if (!productId) {
       console.error("Product ID não encontrado para adicionar a avaliação.");
       return;
     }
-    console.log(`Nova avaliação para o produto ID: ${productId}`, formData);
-    // Aqui, no futuro, faríamos a chamada para a API
-
-    // Após o cadastro (simulado), voltamos para os detalhes do produto
-    navigate(`/products/${productId}`);
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/products/${productId}/reviews`,
+        formData
+      );
+      console.log("Avaliação adicionada com sucesso:", response.data);
+      navigate(`/products/${productId}`);
+    } catch (error: unknown) {
+      let errorMessage = "Erro ao adicionar avaliação.";
+      if (error instanceof Error) {
+        errorMessage += ` ${error.message}`;
+      }
+      setError(errorMessage);
+      console.error("Erro ao adicionar avaliação:", error);
+    }
   };
 
   return (
-    <div>
-      <h2>Adicionar Avaliação</h2>
-      {productId && <p>Para o produto com ID: {productId}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="add-review-container">
+      <h2 className="add-review-title">Adicionar Avaliação</h2>
+      <p className="add-review-product-info">Para o produto: {productName}</p>
+      <form onSubmit={handleSubmit} className="add-review-form">
+        {error && <p className="error-message">{error}</p>}
+        <div className="form-group">
           <label htmlFor="author">Seu Nome:</label>
           <input
             type="text"
@@ -56,7 +73,7 @@ const AddReview: React.FC<AddReviewProps> = ({ productId: propProductId }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="rating">Avaliação (1-5):</label>
           <input
             type="number"
@@ -69,7 +86,7 @@ const AddReview: React.FC<AddReviewProps> = ({ productId: propProductId }) => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="comment">Comentário:</label>
           <textarea
             id="comment"
@@ -78,11 +95,13 @@ const AddReview: React.FC<AddReviewProps> = ({ productId: propProductId }) => {
             onChange={handleChange}
           ></textarea>
         </div>
-        <button type="submit">Enviar Avaliação</button>
+        <div className="form-actions">
+          <button type="submit">Enviar Avaliação</button>
+          <Link to={productId ? `/products/${productId}` : "/"}>
+            <button>Voltar para Detalhes</button>
+          </Link>
+        </div>
       </form>
-      <Link to={productId ? `/products/${productId}` : "/"}>
-        <button>Voltar para Detalhes</button>
-      </Link>
     </div>
   );
 };

@@ -20,6 +20,19 @@ class ProductController {
     }
   }
 
+  async getProductById(req: Request, res: Response): Promise<Response> {
+    console.log(`Tentando buscar produto com ID: ${req.params.productId}`);
+    try {
+      const product = await productService.getProductById(req.params.productId);
+      if (!product) {
+        return res.status(404).json({ message: "Produto não encontrado" });
+      }
+      return res.json(product);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
   async getProductReviews(req: Request, res: Response): Promise<Response> {
     try {
       const reviews = await productService.getReviews(req.params.productId);

@@ -25,6 +25,12 @@ router.get(
   )
 );
 router.get(
+  "/:productId",
+  asyncHandler((req: Request, res: Response) =>
+    controller.getProductById(req, res)
+  )
+);
+router.get(
   "/:productId/reviews",
   asyncHandler((req: Request, res: Response) =>
     controller.getProductReviews(req, res)
